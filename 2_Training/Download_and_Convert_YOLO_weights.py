@@ -5,7 +5,16 @@ import argparse
 
 FLAGS = None
 
+# https://stackoverflow.com/questions/16771894/python-nameerror-global-name-file-is-not-defined
+# The C version will give you the original path of the source file. This is useful in logging errors 
+#   and knowing which source file has the bug.
+# Python's __file__ only gives you the name of the currently executing file, which may not be 
+# very useful in log output.
+# 
+# This is the 2-level parent dir of rundir. e.g.: "/Users/feil/yolo3" --> root_folder is "/Users".
 root_folder = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+# print(os.path.join(root_folder, "2_Training", "src", "keras_yolo3")) --> /Users/2_Training/src/keras_yolo3
 download_folder = os.path.join(root_folder, "2_Training", "src", "keras_yolo3")
 data_folder = os.path.join(root_folder, "Data")
 model_folder = os.path.join(data_folder, "Model_Weights")
@@ -56,7 +65,7 @@ if __name__ == "__main__":
                 "cd",
                 download_folder,
                 "\n",
-                "gdown",
+                "gdown", # gdown: download to google drive
                 f"https://drive.google.com/uc?id={gdrive_id}",
             ]
         )
